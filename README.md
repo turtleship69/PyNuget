@@ -4,12 +4,11 @@ Otherwize just reuse the tool.
 Yeet  
 # Usage
 Create a nugget (text) file:  
-$ PyNuget -c [input file name] [output nuget name]
+$ PyNuget -c [input file name] [output nuget name]  
 Recreate original file:  
 $ PyNuget -r [input nuget name] [output file name]  
 
-# To Do:  
-0) Upload code
-1) Encryption
-2) Compression
-3) Pip
+# To Do:    
+1) Encryption  
+2) Compression  
+3) Pip  

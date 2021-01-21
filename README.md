@@ -12,3 +12,7 @@ $ PyNuget -r [input nuget name] [output file name]
 1) Encryption  
 2) Compression  
 3) Pip  
+
+# Things I should probably do:
+1) Add screenshots to the usage section
+2) Documentation (as if there's enough in here to be worth documentation).

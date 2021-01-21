@@ -1,5 +1,5 @@
 import base64
-import zlib
+import os
 import sys
 
 mimetypes = {
@@ -81,28 +81,32 @@ mimetypes = {
     '7z':'application/x-7z-compressed'
 }
 
-def createNugget(file, nugget, compress=False):
-    with open(file, 'rb') as f:
-        data = f.read()
+def createNugget(file, nugget, compress=True):
 
     if compress:
-        data = zlib.compress(data)
+        list = "7z a -mx=9 YouCanDeleteThisArchiveIfItShowsUpInYourFileManagerItsFromPyNuget.7z " + file
+        os.popen(str(list), "w")
+        
+    with open("YouCanDeleteThisArchiveIfItShowsUpInYourFileManagerItsFromPyNuget.7z", 'rb') as f:
+        data = f.read()
+    
     data = base64.b64encode(data)
     data = str(data)[2:-1]
 
     with open(nugget, 'w') as f:
         f.write("data:"+mimetypes[file.split('.')[1]]+';base64,'+data)
 
-def readNugget(nugget, file, compress=False):
+def readNugget(nugget, file, compress=True):
     with open(nugget, 'r') as f:
         raw = f.read()
-
+    
     extension, data = raw.split(';base64,')
     extension = extension.split('/')[-1]
 
     data = base64.b64decode(data)
     if compress:
-        data = zlib.decompress(data)
+        list = ["7z e YouCanDeleteThisArchiveIfItShowsUpInYourFileManagerItsFromPyNuget.7z"]
+        os.popen(str(list))
     
     with open(file, 'wb') as f:
         f.write(data)

@@ -95,7 +95,7 @@ def createNugget(file, nugget, compress=True):
 
     with open(nugget, 'w') as f:
         f.write("data:"+mimetypes[file.split('.')[1]]+';base64,'+data)
-
+    print("done")
 def readNugget(nugget, file, compress=True):
     with open(nugget, 'r') as f:
         raw = f.read()
@@ -104,12 +104,14 @@ def readNugget(nugget, file, compress=True):
     extension = extension.split('/')[-1]
 
     data = base64.b64decode(data)
-    if compress:
-        list = ["7z e YouCanDeleteThisArchiveIfItShowsUpInYourFileManagerItsFromPyNuget.7z"]
-        os.popen(str(list))
     
-    with open(file, 'wb') as f:
+    
+    with open("YouCanDeleteThisArchiveIfItShowsUpInYourFileManagerItsFromPyNuget.7z", 'wb') as f:
         f.write(data)
+
+    if compress:
+        list = "7z e YouCanDeleteThisArchiveIfItShowsUpInYourFileManagerItsFromPyNuget.7z"
+        os.popen(str(list), "w")
 
 if sys.argv[1] == "-c":
     createNugget(sys.argv[2], sys.argv[3])
@@ -117,4 +119,3 @@ elif sys.argv[1] == "-r":
     readNugget(sys.argv[2], sys.argv[3])
 else:
     print ("Suffer from the wrath of my lazyness!")
-

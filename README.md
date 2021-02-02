@@ -9,10 +9,11 @@ Recreate original file:
 $ PyNuget -r [input nuget name] [output file name]  
 
 # To Do:    
-1) Encryption  
-2) Compression  
-3) Pip  
+1) Encryption. 
+2) Compression. 
+3) Pip. 
 
 # Things I should probably do:
-1) Add screenshots to the usage section
+1) Add screenshots to the usage section.
 2) Documentation (as if there's enough in here to be worth documentation).
+3) Move over to argsparse (currently using system.args).

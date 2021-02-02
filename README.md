@@ -9,9 +9,9 @@ Recreate original file:
 $ PyNuget -r [input nuget name] [output file name]  
 
 # To Do:    
-1) Encryption. 
-2) Compression. 
-3) Pip. 
+1) Encryption 
+2) Compression 
+3) Pip 
 
 # Things I should probably do:
 1) Add screenshots to the usage section.

@@ -1,5 +1,5 @@
 import base64
-import os
+import lzma
 import sys
 
 mimetypes = {
@@ -82,36 +82,30 @@ mimetypes = {
 }
 
 def createNugget(file, nugget, compress=True):
+    with open(file, 'rb') as f:
+        data = f.read()
 
     if compress:
-        list = "7z a -mx=9 YouCanDeleteThisArchiveIfItShowsUpInYourFileManagerItsFromPyNuget.7z " + file
-        os.popen(str(list), "w")
-        
-    with open("YouCanDeleteThisArchiveIfItShowsUpInYourFileManagerItsFromPyNuget.7z", 'rb') as f:
-        data = f.read()
-    
+        data = lzma.compress(data, preset=9)
     data = base64.b64encode(data)
     data = str(data)[2:-1]
 
     with open(nugget, 'w') as f:
         f.write("data:"+mimetypes[file.split('.')[1]]+';base64,'+data)
-    print("done")
+
 def readNugget(nugget, file, compress=True):
     with open(nugget, 'r') as f:
         raw = f.read()
-    
+
     extension, data = raw.split(';base64,')
     extension = extension.split('/')[-1]
 
     data = base64.b64decode(data)
-    
-    
-    with open("YouCanDeleteThisArchiveIfItShowsUpInYourFileManagerItsFromPyNuget.7z", 'wb') as f:
-        f.write(data)
-
     if compress:
-        list = "7z e YouCanDeleteThisArchiveIfItShowsUpInYourFileManagerItsFromPyNuget.7z"
-        os.popen(str(list), "w")
+        data = lzma.decompress(data)
+    
+    with open(file, 'wb') as f:
+        f.write(data)
 
 if sys.argv[1] == "-c":
     createNugget(sys.argv[2], sys.argv[3])

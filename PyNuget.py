@@ -1,7 +1,6 @@
 import argparse
 import base64
 import lzma
-import sys
 
 parser = argparse.ArgumentParser()
 parser.add_argument("Type")

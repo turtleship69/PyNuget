@@ -1,6 +1,13 @@
+import argparse
 import base64
-import zlib
-import sys
+import lzma
+
+parser = argparse.ArgumentParser()
+parser.add_argument("Type")
+parser.add_argument("ArgumentA")
+parser.add_argument("ArgumentB")
+parser.add_argument("-c", "--compress", help="Use M9 compression do decrease storage usage at the cost of computational resources", action="store_true")
+args = parser.parse_args()
 
 mimetypes = {
     'aac':'audio/aac',
@@ -86,7 +93,7 @@ def createNugget(file, nugget, compress=False):
         data = f.read()
 
     if compress:
-        data = zlib.compress(data)
+        data = lzma.compress(data, preset=9)
     data = base64.b64encode(data)
     data = str(data)[2:-1]
 
@@ -102,15 +109,19 @@ def readNugget(nugget, file, compress=False):
 
     data = base64.b64decode(data)
     if compress:
-        data = zlib.decompress(data)
+        data = lzma.decompress(data)
     
     with open(file, 'wb') as f:
         f.write(data)
 
-if sys.argv[1] == "-c":
-    createNugget(sys.argv[2], sys.argv[3])
-elif sys.argv[1] == "-r":
-    readNugget(sys.argv[2], sys.argv[3])
-else:
-    print ("Suffer from the wrath of my lazyness!")
 
+if args.Type.lower() == "create":
+    if args.compress:
+        createNugget(args.ArgumentA, args.ArgumentB, compress=True)
+    else:
+        createNugget(args.ArgumentA, args.ArgumentB)
+if args.Type.lower() == "read":
+    if args.compress:
+        readNugget(args.ArgumentA, args.ArgumentB, compress=True)
+    else:
+        readNugget(args.ArgumentA, args.ArgumentB)

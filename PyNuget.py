@@ -6,7 +6,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("Type")
 parser.add_argument("ArgumentA")
 parser.add_argument("ArgumentB")
-parser.add_argument("-c", "--compress", help="Use M9 compression do decrease storage usage at the cost of computational resources", action="store_true")
+parser.add_argument("-c", "--compress", help="Use M9 compression to decrease storage usage at the cost of computational resources", action="store_true")
 args = parser.parse_args()
 
 mimetypes = {
